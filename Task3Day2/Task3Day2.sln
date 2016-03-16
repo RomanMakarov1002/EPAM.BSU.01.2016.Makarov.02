@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionForInt", "ExtensionForInt\ExtensionForInt.csproj", "{C293E8F5-FA3E-4392-B3A4-6605415C9F8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{A1C0ECD4-2B1B-4E75-9C03-E678C2FEA9CB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTests", "NUnitTests\NUnitTests.csproj", "{523841E8-7513-4343-BF2E-31844C2F2523}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{C293E8F5-FA3E-4392-B3A4-6605415C9F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C293E8F5-FA3E-4392-B3A4-6605415C9F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C293E8F5-FA3E-4392-B3A4-6605415C9F8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1C0ECD4-2B1B-4E75-9C03-E678C2FEA9CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1C0ECD4-2B1B-4E75-9C03-E678C2FEA9CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1C0ECD4-2B1B-4E75-9C03-E678C2FEA9CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1C0ECD4-2B1B-4E75-9C03-E678C2FEA9CB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{523841E8-7513-4343-BF2E-31844C2F2523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{523841E8-7513-4343-BF2E-31844C2F2523}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{523841E8-7513-4343-BF2E-31844C2F2523}.Release|Any CPU.ActiveCfg = Release|Any CPU
