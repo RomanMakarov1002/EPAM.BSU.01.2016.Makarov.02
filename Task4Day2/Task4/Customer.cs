@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CustFormatProvider;
 
 namespace Task4
 {
-    public class Customer
+    public class Customer: IFormattable
     {
         public string Name { get; }
         public string ContactPhone { get; }
@@ -21,45 +23,63 @@ namespace Task4
 
         public override string ToString()
         {
-            return ToString("123");
+            return ToString("N", CultureInfo.CurrentCulture);
         }
 
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (String.IsNullOrEmpty(format)||format.ToUpperInvariant()=="G")
+                format = "N";
+            if (formatProvider == null)
+            {
+                formatProvider = CultureInfo.CurrentCulture;
+            }
+            string ft = format.ToUpperInvariant();
+            StringBuilder sb = new StringBuilder();
+            if (formatProvider is CultureInfo)
+            {
+                if (ft.Contains('N'))
+                {                   
+                    sb.Append(Name.ToString(formatProvider));
+                    sb.Append(' ');
+                }
+                if (ft.Contains('R'))
+                {
+                    sb.Append(Revenue.ToString("C0",formatProvider));
+                    sb.Append(' ');
+                }
+                if (ft.Contains('P'))
+                {
+                    sb.Append(ContactPhone.ToString(formatProvider));
+                    sb.Append(' ');
+                }
+            }
+            else
+            {
+                if (ft.Contains('N'))
+                {
+                    sb.AppendFormat(formatProvider, "{0:N}", Name);
+                    sb.Append(' ');
+                }
+                if (ft.Contains('R'))
+                {
+                    sb.AppendFormat(formatProvider, "{0:R}", Revenue);
+                    sb.Append(' ');
+                }
+                if (ft.Contains('P'))
+                {
+                    sb.AppendFormat(formatProvider, "{0:P}", ContactPhone);
+                    sb.Append(' ');
+                }
+            }         
+            return sb.ToString();
+        }
+
+       
         public string ToString(string format)
         {
-
-        switch (format)
-            {
-                case "123":
-                    return string.Format("Customer record: {0}, {1}, {2}", Name, Revenue.ToString("N0"), ContactPhone);
-                case "12":
-                    return string.Format("Customer record: {0}, {1}", Name, Revenue.ToString("N0"));
-                case "13":
-                    return string.Format("Customer record: {0}, {1}", Name, ContactPhone);
-                case "23":
-                    return string.Format("Customer record: {0}, {1}", Revenue.ToString("N0"), ContactPhone);
-                case "1":
-                    return string.Format("Customer record: {0}", Name);
-                case "2":
-                    return string.Format("Customer record: {0}", Revenue.ToString("N0"));
-                case "3":
-                    return string.Format("Customer record: {0}", ContactPhone);               
-
-                default:
-                    throw new ArgumentException(string.Format("'{0}' is an invalid format string", format));
-            }
+            return ToString(format, CultureInfo.CurrentCulture);
         }
-    }
-
-    public static class OtherClass
-    {
-        public static string NameFormatter(this Customer customer, int length)
-        {
-            return string.Format("Customer record: {0}, {1}, {2}", customer.Name.Substring(0,length), customer.Revenue.ToString("N0"), customer.ContactPhone );           
-        }
-
-        public static string PhoneFormatter(this Customer customer)
-        {
-            return string.Format("Customer record: {0}, {1}, {2}", customer.Name, customer.Revenue.ToString("N0"), customer.ContactPhone.Substring(9));
-        }
-    }
+        
+    }    
 }

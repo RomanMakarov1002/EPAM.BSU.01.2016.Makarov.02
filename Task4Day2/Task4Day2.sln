@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task4", "Task4\Task4.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NunitTests", "NunitTests\NunitTests.csproj", "{B460AC16-A60A-46C3-AF46-3E24D1308B62}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustFormatProvider", "FormatProvider\CustFormatProvider.csproj", "{71FA0E84-7E41-467D-9462-30CC24F2F44D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B460AC16-A60A-46C3-AF46-3E24D1308B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B460AC16-A60A-46C3-AF46-3E24D1308B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B460AC16-A60A-46C3-AF46-3E24D1308B62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71FA0E84-7E41-467D-9462-30CC24F2F44D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71FA0E84-7E41-467D-9462-30CC24F2F44D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71FA0E84-7E41-467D-9462-30CC24F2F44D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71FA0E84-7E41-467D-9462-30CC24F2F44D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
