@@ -8,78 +8,146 @@ using System.Xml;
 
 namespace Euclidean_algoryithm
 {
-    public class Logic
+    public static class Logic
     {
         public static int FindGcdWithEuclid(ref TimeSpan time, int value1, int value2)
         {
-            if (value1 == 0 && value2 == 0)
-                throw new  ArgumentException("At least one number must be non-zero");
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            var gcd = CalculateForEuclid(value1, value2);
-            sw.Stop();
-            time = sw.Elapsed;
-            return Math.Abs(gcd);
+            return Find(Calculate, ref time, value1, value2);
+        }
+
+        public static int FindGcdWithEuclid(int value1, int value2)
+        {
+            return Find(Calculate, value1, value2);
         }
 
         public static int FindGcdWithEuclid(ref TimeSpan time, int value1, int value2, int value3)
+        {
+            return Find(Calculate, ref time, value1, value2, value3);
+        }
+
+        public static int FindGcdWithEuclid(int value1, int value2, int value3)
+        {
+            return Find(Calculate, value1, value2, value3);
+        }
+
+        public static int FindGcdWithEuclid(ref TimeSpan time, params int[] values)
+        {
+            return Find(Calculate, ref time, values);
+        }
+
+        public static int FindGcdWithEuclid(params int[] values)
+        {
+            return Find(Calculate, values);
+        }
+
+
+
+        public static int FindGcdWithStein(ref TimeSpan time, int value1, int value2)
+        {
+            return Find(CalculateForStein, ref time, value1, value2);
+        }
+
+        public static int FindGcdWithStein(int value1, int value2)
+        {
+            return Find(CalculateForStein, value1, value2);
+        }
+
+        public static int FindGcdWithStein(ref TimeSpan time, int value1, int value2, int value3)
+        {
+            return Find(CalculateForStein, ref time, value1, value2, value3);
+        }
+
+        public static int FindGcdWithStein(int value1, int value2, int value3)
+        {
+            return Find(CalculateForStein, value1, value2, value3);
+        }
+
+        public static int FindGcdWithStein(ref TimeSpan time, params int[] values)
+        {
+            return Find(CalculateForStein, ref time, values);
+        }
+
+        public static int FindGcdWithStein(params int[] values)
+        {
+            return Find(CalculateForStein, values);
+        }
+
+
+
+        private static int Find(Func<int, int, int> del, int value1, int value2)
+        {
+            if (value1==0 && value2==0)
+                throw new ArgumentException("At least one number must be non-zero");
+            return del(value1,value2);
+        }
+
+        private static int Find(Func<int, int, int> del, int value1, int value2, int value3)
+        {
+            if (value1==0 && value2 == 0 && value3 == 0)
+                throw new ArgumentException("At least one number must be non-zero");
+            return del(value1,(del(value2, value3)));
+        }
+
+        private static int Find(Func<int, int, int> del, ref TimeSpan time, int value1, int value2)
+        {
+            if (value1 == 0 && value2 == 0)
+                throw new ArgumentException("At least one number must be non-zero");
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            var result = del(value1, value2);
+            sw.Stop();
+            time = sw.Elapsed;
+            return result;
+        }
+
+        private static int Find(Func<int, int, int> del, ref TimeSpan time, int value1, int value2, int value3)
         {
             if (value1 == 0 && value2 == 0 && value3 == 0)
                 throw new ArgumentException("At least one number must be non-zero");
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var gcd = CalculateForEuclid(value1, value2, value3);
+            var result = del(value1, del(value2, value3));
             sw.Stop();
             time = sw.Elapsed;
-            return Math.Abs(gcd);
+            return result;
         }
 
-        public static int FindGcdWithEuclid(ref TimeSpan time, params int[] values)
+        private static int Find(Func<int, int, int> del, params int[] values)
         {
-           if(values == null || values.Length <2)
-                throw  new  ArgumentException("Need at least 2 numbers to find GCD");
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            var gcd = CalculateForEuclid(values);
-            sw.Stop();
-            time = sw.Elapsed;
-            return Math.Abs(gcd);
-        }
-
-        public static uint FindGcdWithStein(ref TimeSpan time, uint value1, uint value2)
-        {
-            if (value1 == 0 && value2 == 0)
-                throw new ArgumentException("At least one number must be non-zero");
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            uint gcd = CalculateForStein(value1, value2);
-            sw.Stop();
-            time = sw.Elapsed;
-            return gcd;
-        }
-
-
-        public static uint FindGcdWithStein(ref TimeSpan time, params uint[] values)
-        {
-            if (values== null || values.Length<2)
+            if (values == null || values.Length < 2)
                 throw new ArgumentException("Need at least 2 numbers to find GCD");
-            bool allZero = true;
-            for (int i=0; i<values.Length; i++)
-                if (values[i] != 0)
-                    allZero = false;
-            if (allZero)
-                throw new ArgumentException("At least one number must be non - zero");
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            var result = values[0];
             for (int i = 1; i < values.Length; i++)
-                values[0]=CalculateForStein(values[0], values[i]);
-            sw.Stop();
-            time = sw.Elapsed;
-            return values[0];
+                result = del(result, values[i]);
+            if (result == 0)
+                throw new ArgumentException("At least one number must be non-zero");
+            return result;
         }
 
-        private static uint CalculateForStein(uint value1, uint value2)
+        private static int Find(Func<int, int, int> del, ref TimeSpan time, params int[] values)
         {
+            if (values == null || values.Length < 2)
+                throw new ArgumentException("Need at least 2 numbers to find GCD");
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            var result = values[0];
+            for (int i = 1; i < values.Length; i++)
+                result = del(result, values[i]);
+            sw.Stop();
+            time = sw.Elapsed;
+            if (result == 0)
+                throw new ArgumentException("At least one number must be non-zero");
+            return result;
+        }
+               
+
+
+        private static int CalculateForStein(int value1, int value2)
+        {
+            if (value1 < 0)
+                value1 *= -1;
+            if (value2 < 0)
+                value2 *= -1;
             if (value1 == 0) return value2;
             if (value2 == 0) return value1;
             if (value1 == value2) return value1;
@@ -110,25 +178,15 @@ namespace Euclidean_algoryithm
         }
 
 
-        private static int CalculateForEuclid(params int[] values)
+        private static int Calculate(int left, int right)
         {
-            bool allZero = true;
-            if (values[0] != 0)
-                allZero = false;
-            for (int i = 1; i < values.Length; i++)
+            while (right != 0)
             {
-                if (values[i] != 0)
-                    allZero = false;
-                while (values[i] != 0)
-                {
-                    var t = values[i];
-                    values[i] = values[0] % values[i];
-                    values[0] = t;
-                }
+                var t = right;
+                right = left % right;
+                left = t;
             }
-            if (allZero)
-                throw new ArgumentException("At least one number must be non-zero");
-            return values[0];
-        }
+            return Math.Abs(left);
+        }      
     }
 }
